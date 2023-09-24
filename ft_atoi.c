@@ -1,11 +1,13 @@
 #include "libft.h"
+#include <limits.h>
+#include <stdint.h>
 #include <stdlib.h>
 
 int	ft_atoi(const char *str)
 {
 	size_t		i;
 	int		minus;
-	long long int	result;
+	unsigned long long result;
 
 	i = 0;
 	result = 0;
@@ -15,21 +17,18 @@ int	ft_atoi(const char *str)
 		str[i] == '\v' || str[i] == '\n' || str[i] == '\t')
 		i++;
 	if (str[i] == '-')
-	{
 		minus = -1;
+	if (str[i] == '-' || str[i] == '+')
 		++i;
-	}
-	while (str[i] >= '-' && str[i] <= '9')
+	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + str[i] - '0';
+		if (result < INT64_MAX)
+			result = result * 10 + str[i] - '0';
+		if (result > INT64_MAX && minus < 0)
+			return 0;
+		else if (result > INT64_MAX)
+			return -1;
 		++i;
 	}
 	return ((int)(result * minus));
 }
-
-//int	main()
-//{
-//	const char* str = " 9223";
-//	printf("%i\n", ft_atoi(str));
-//	printf("%i\n", atoi(str));
-//}
