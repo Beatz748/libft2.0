@@ -1,4 +1,6 @@
 libftTester
 *.o
 a.out
+a.out*
+a.out.dSYM
 *.a
