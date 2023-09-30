@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void	*ft_memset(void *destination, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
@@ -26,5 +27,11 @@ int	ft_isascii(int c);
 int	ft_isprint(int c);
 int	ft_toupper(int c);
 int	ft_tolower(int c);
+void	*ft_calloc(size_t count, size_t size);
+char	*ft_strdup(const char *s1);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*ft_strtrim(char const *s1, char const *set);
+char	**ft_split(char const *s, char c);
 
 #endif
