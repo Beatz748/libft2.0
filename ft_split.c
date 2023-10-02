@@ -10,13 +10,11 @@ size_t	getArrayCount(char const *s, char c)
 
 	while (s[i])
 	{
-		if ((unsigned char)s[i] == (unsigned char)c)
+		if ((s[i] != c)
+				&& (s[i + 1] == c
+					|| s[i + 1] == '\0'))
 		{
 			++count;
-			while (s[i] && (unsigned char)s[i] == (unsigned char)c)
-				++i;
-			if (!s[i])
-				--count;
 		}
 		++i;
 	}
@@ -28,12 +26,8 @@ size_t	word_size(char *s, char c)
 	size_t	i;
 
 	i = 0;
-	while (s[i])
-	{
-		if ((unsigned char)s[i] == (unsigned char)c)
-			return i;
+	while (s[i] && s[i] != c)
 		++i;
-	}
 	return (i);
 }
 
@@ -67,17 +61,16 @@ char	**ft_split(char const *s, char c)
 	count = getArrayCount(s, c);
 	if (!(result = (char **)malloc((count + 1) * sizeof(char **))))
 		return 0x000;
-	while (i <= count)
+	while (i < count)
 	{
-		while ((unsigned char)(*(ptr)) == (unsigned char)c)
+		while ((*ptr) && (*(ptr)) == c)
 			++ptr;
-		if (!(*ptr))
-			break;
 		pad = word_size(ptr, c);
 		if (!(result[i] = (char *)malloc(pad * sizeof(char))))
 			return (ft_free((void **)result, count));
-		ft_strlcpy(result[i], ptr, pad + 1);
-		ptr += pad + 1;
+		result[i] = ft_memcpy(result[i], ptr, pad);
+		result[i][pad] = 0;
+		ptr += pad;
 		++i;
 	}
 	result[i] = NULL;
